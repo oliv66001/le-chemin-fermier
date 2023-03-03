@@ -1,0 +1,29 @@
+  #calendar{
+    width: 80%;
+    margin: auto;
+    color: var(--text-color);
+  }
+
+  #calendar div a {
+    background-color: var(--templates-color);
+    color: var(--text-color);
+    border-radius: 2px solid;
+  }
+
+  #calendar div span {
+    background-color: var(--templates-color);
+    color: var(--text-color);
+    border-radius: 2px solid;
+  }
+
+  #calendar div button{
+    background-color: var(--templates-color);
+    color: var(--text-color);
+    border-radius: 2px solid;
+  }
+
+  .btn a{
+    color: var(--text-color);
+  }
+
+  

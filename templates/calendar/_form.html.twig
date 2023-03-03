@@ -1,0 +1,6 @@
+{{ form_start(calendarForm) }}
+    {{ form_row(calendarForm.start) }}
+    {{ form_row(calendarForm.nbOfPeople) }}
+    {{ form_row(calendarForm.reservationTable) }}
+    <button class="btn">{{ button_label|default('Enregitrer') }}</button>
+{{ form_end(calendarForm) }}
