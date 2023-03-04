@@ -23,12 +23,12 @@ class PictureService
         // On récupère les infos de l'image
         $picture_infos = getimagesize($picture);
 
-        if($picture_infos === false){
+        if ($picture_infos === false) {
             throw new Exception('Format d\'image incorrect');
         }
 
         // On vérifie le format de l'image
-        switch($picture_infos['mime']){
+        switch ($picture_infos['mime']) {
             case 'image/png':
                 $picture_source = imagecreatefrompng($picture);
                 break;
@@ -88,20 +88,20 @@ class PictureService
 
     public function delete(string $fichier, ?string $folder = '', ?int $width = 250, ?int $height = 250)
     {
-        if($fichier !== 'default.webp'){
+        if ($fichier !== 'default.webp'){
             $success = false;
             $path = $this->params->get('images_directory') . $folder;
 
             $mini = $path . '/mini/' . $width . 'x' . $height . '-' . $fichier;
 
-            if(file_exists($mini)){
+            if (file_exists($mini)){
                 unlink($mini);
                 $success = true;
             }
 
             $original = $path . '/' . $fichier;
 
-            if(file_exists($original)){
+            if (file_exists($original)){
                 unlink($original);
                 $success = true;
             }
