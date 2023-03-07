@@ -1,0 +1,78 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}Le chemin Fermier | La carte
+{% endblock %}
+
+{% block body %}
+	<article class="container-fluid">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<h1 class="text-center mb-5">La carte</h1>
+
+			<div id="flipbook" style="width:800px, height:600px">
+		<div class="page1">
+  <div class="hard"><h1>Carte du restaurant Le chemin Fermier</h1></div>
+  <div class="hard"><p>Notre menu gastro</p></div></div>
+  {% for categorie in categories %}
+    <div class="page">
+     <div class="entree">
+		 <h1>{{ categorie.name }}</h1>
+		{% for entree in entrees %}
+          <h2>{{ entree.name }}</h2>
+          <p>{{ entree.description }}</p>
+          <p>{{ entree.price }}</p>
+		  {% endfor %}
+        </div>
+   
+     
+        <div class="plat">
+		 <h1>{{ categorie.name }}</h1>
+		 {% for plat in plats %}
+          <h2>{{ plat.name }}</h2>
+          <p>{{ plat.description }}</p>
+          <p>{{ plat.price }}</p>
+		  {% endfor %}
+        </div>
+      
+      
+        <div class="dessert">
+		 <h1>{{ categorie.name }}</h1>
+		{% for dessert in desserts %}
+          <h2>{{ dessert.name }}</h2>
+          <p>{{ dessert.description }}</p>
+          <p>{{ dessert.price }}</p>
+		    {% endfor %}
+        </div>
+    
+     
+        <div class="boisson">
+		 <h1>{{ categorie.name }}</h1>
+		 {% for boisson in boissons %}
+          <h2>{{ boisson.name }}</h2>
+          <p>{{ boisson.description }}</p>
+          <p>{{ boisson.price }}</p>
+		     {% endfor %}
+        </div>
+   
+    </div>
+  {% endfor %}
+  <div class="hard"></div>
+  <div class="hard"></div>
+</div>
+
+				</div>
+		</div>
+	</article>
+
+{% endblock %}
+
+{% block javascripts %}
+
+	
+<script src="{{ asset('assets/js/lib/turn.min.js') }}" defer></script>
+<script src="{{ asset('assets/js/lib/turn.html4.min.js') }}" defer></script>
+<script src="{{ asset('assets/js/lib/turn.js') }}" defer></script>
+	
+{% endblock %}
+

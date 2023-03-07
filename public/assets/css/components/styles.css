@@ -9,3 +9,43 @@ body {
     margin-right: -340px;
 }
 
+button.navbar-toggler span{
+    background-color: var(--text-color);
+    color: var(--text-color);
+    border: 3px solid var(--text-color);
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 20px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+div .shadow {
+    width: 800px;
+    height: 600px;
+    transform: scale(1.5);
+    transform-origin: top left;
+    transform-style: preserve-3d;
+}
+
+#flipbook .page-wrapper .large-page {
+    width: 800px;
+    height: 600px;
+    transform: scale(1.5);
+    transform-origin: top left;
+    transform-style: preserve-3d;
+  }
+
+  div .page-wrapper .large-page {
+    width: 800px;
+    height: 600px;
+    transform: scale(1.5);
+    transform-origin: top left;
+    transform-style: preserve-3d;
+  }
+  
+
+ 
+
+
+

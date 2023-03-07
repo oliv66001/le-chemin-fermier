@@ -1,0 +1,49 @@
+
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center mt-10">Nos desserts</h1>
+            </div>
+        </div>
+	<div>
+    {% for categorie in categories %}
+						<h2 class="text-center mt-8">
+							{{ categorie.name == 'Dessert' | upper }}
+						</h2>
+						<ul>
+							{% for dessert in desserts %}
+								{% if dessert.categorie.id == categorie.id %}
+									<section class="container-fluid">
+										<div class="row">
+											<div class="col-12">
+
+												<ol>
+													<h5>Nom :</br>
+												</h5>
+												<h3 class="text-center mt-10">
+													{{ dessert.name }}</h3>
+											</ol>
+											<ol>
+												<h5>Description :</br>
+											</h5>
+											<h5>{{ dessert.description }}</h5>
+										</ol>
+										<ol>
+											<h5>Prix :</br>
+										</h5>
+										<h3 class="text-center">
+											{{ dessert.price }}€</h3>
+									</ol>
+								</div>
+							</div>
+						</section>
+					{% endif %}
+             
+				{% endfor %}
+			</ul>
+            {% endfor %}
+		</div>
+           
+{% endblock %}

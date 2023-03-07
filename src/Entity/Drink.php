@@ -6,9 +6,11 @@ use App\Entity\MyTrait\SlugTrait;
 use App\Repository\DrinkRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\SerializedName;
+use JsonSerializable;
 
 #[ORM\Entity(repositoryClass: DrinkRepository::class)]
-class Drink
+class Drink implements JsonSerializable
 {
 
     use SlugTrait;
@@ -19,6 +21,7 @@ class Drink
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[SerializedName("boissons")]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -81,5 +84,13 @@ class Drink
         $this->categorie = $categorie;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'boissons' => $this->getName(),
+            // ...
+        ];
     }
 }

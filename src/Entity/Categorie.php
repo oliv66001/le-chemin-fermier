@@ -7,6 +7,8 @@ use App\Repository\CategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 class Categorie
@@ -32,6 +34,7 @@ class Categorie
 
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Dessert::class)]
     private Collection $dessert;
+
 
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Drink::class)]
     private Collection $drink;

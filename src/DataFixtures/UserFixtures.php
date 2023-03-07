@@ -40,7 +40,7 @@ class UserFixtures extends Fixture
 
          $faker = \Faker\Factory::create('fr_FR');
 
-         for ($usr =1; $usr <= 5; $usr++){
+         for ($usr =1; $usr <= 5; $usr++) {
             $user = new User();
             $user->setEmail($faker->email);
             $user->setResetToken($faker->sha1);
