@@ -1,47 +1,44 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Nos entrées{% endblock %}
-
-
-
 {% block body %}
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-12">
-			<h1 class="text-center mt-10">Nos entrées</h1>
-		</div>
-	</div>
-	<div>
-		{% for categorie in categories %}
-			<h2 class="text-center mt-8">
-				{{ categorie.name == 'Entree' | upper }}
-			</h2>
-			<ul>
-				{% for entree in categorie.entree %}
-					<section class="container-fluid">
-						<div class="row">
-							<div class="col-12">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+
+				<ul>
+
+					{% for categorie in categories %}
+
+						{% if categorie.slug == "Entrees" %}
+							<img src={{ categorie.imageUrl }} alt="{{ categorie.name }}"/>
+						{% endif %}
+					{% endfor %}
+					<h1 class="text-center mt-10">Nos entrées :
+					</h1>
+					{% for entree in entrees %}
+
+						<section class="container-fluid">
+							<div class="row justify-content-center">
+								<div class="col-md-6">
+									<ol>
+										<h5>Nom :</br>
+									</h5>
+									<h3 class="text-center mt-10">
+										{{ entree.name }}</h3>
+								</ol>
 								<ol>
-									<h5>Nom :</br>
+									<h5>Description :</br>
 								</h5>
-								<h3 class="text-center mt-10">
-									{{ entree.name }}</h3>
+								<h5>{{ entree.description }}</h5>
 							</ol>
 							<ol>
-								<h5>Description :</br>
+								<h5>Prix :</br>
 							</h5>
-							<h5>{{ entree.description }}</h5>
+							<h3 class="text-center">
+								{{ entree.price }}€</h3>
 						</ol>
-						<ol>
-							<h5>Prix :</br>
-						</h5>
-						<h3 class="text-center">
-							{{ entree.price }}€</h3>
-					</ol>
+					</div>
 				</div>
-			</div>
-		</section>
+			</section>
 
-	{% endfor %}
-</ul>{% endfor %}</div>
-{% endblock %}
+		{% endfor %}
+	</ul>
+</div></div><div>{% endblock %}

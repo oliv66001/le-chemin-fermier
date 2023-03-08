@@ -1,49 +1,44 @@
-
-
 {% block body %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <h1 class="text-center mt-10">Nos Plats</h1>
-            </div>
-        </div>
-	<div>
-    {% for categorie in categories %}
-						<h2 class="text-center mt-8">
-							{{ categorie.name == 'Plat' | upper }}
-						</h2>
-						<ul>
-							{% for plat in plats %}
-								{% if plat.categorie.id == categorie.id %}
-									<section class="container-fluid">
-										<div class="row">
-											<div class="col-12">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
 
-												<ol>
-													<h5>Nom :</br>
-												</h5>
-												<h3 class="text-center mt-10">
-													{{ plat.name }}</h3>
-											</ol>
-											<ol>
-												<h5>Description :</br>
-											</h5>
-											<h5>{{ plat.description }}</h5>
-										</ol>
-										<ol>
-											<h5>Prix :</br>
-										</h5>
-										<h3 class="text-center">
-											{{ plat.price }}€</h3>
-									</ol>
-								</div>
-							</div>
-						</section>
-					{% endif %}
-             
-				{% endfor %}
-			</ul>
-            {% endfor %}
-		</div>
-           
-{% endblock %}
+				<ul>
+
+					{% for categorie in categories %}
+
+						{% if categorie.slug == "Plats" %}
+							<img src={{ categorie.imageUrl }} alt="{{ categorie.name }}"/>
+						{% endif %}
+					{% endfor %}
+					<h1 class="text-center mt-10">Nos plats :
+					</h1>
+					{% for plat in plats %}
+
+						<section class="container-fluid">
+							<div class="row justify-content-center">
+								<div class="col-md-6">
+									<ol>
+										<h5>Nom :</br>
+									</h5>
+									<h3 class="text-center mt-10">
+										{{ plat.name }}</h3>
+								</ol>
+								<ol>
+									<h5>Description :</br>
+								</h5>
+								<h5>{{ plat.description }}</h5>
+							</ol>
+							<ol>
+								<h5>Prix :</br>
+							</h5>
+							<h3 class="text-center">
+								{{ plat.price }}€</h3>
+						</ol>
+					</div>
+				</div>
+			</section>
+
+		{% endfor %}
+	</ul>
+</div></div><div>{% endblock %}

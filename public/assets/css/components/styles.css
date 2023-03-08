@@ -20,29 +20,16 @@ button.navbar-toggler span{
     cursor: pointer;
 }
 
-div .shadow {
-    width: 800px;
-    height: 600px;
-    transform: scale(1.5);
-    transform-origin: top left;
-    transform-style: preserve-3d;
+section {
+    background-color: var(--templates-color);
+    color: var(--text-color);
+    font-family: MaPolice, sans-serif;
 }
 
-#flipbook .page-wrapper .large-page {
-    width: 800px;
-    height: 600px;
-    transform: scale(1.5);
-    transform-origin: top left;
-    transform-style: preserve-3d;
-  }
 
-  div .page-wrapper .large-page {
-    width: 800px;
-    height: 600px;
-    transform: scale(1.5);
-    transform-origin: top left;
-    transform-style: preserve-3d;
-  }
+
+
+    
   
 
  

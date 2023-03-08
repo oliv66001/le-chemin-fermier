@@ -19,4 +19,11 @@ class PlatController extends AbstractController
         $categories = $entityManager->getRepository(Categorie::class)->findAll();
         return $this->render('plat/index.html.twig', compact('categories','plats'));
     }
+
+    #[Route('/{slug}', name: 'app_plat_show')]
+    public function show(Categorie $categorie, PlatRepository $platRepository): Response
+    {
+        $plats = $platRepository->findBy(['categorie' => $categorie]);
+        return $this->render('plat/show.html.twig', compact('plats'));
+    }
 }

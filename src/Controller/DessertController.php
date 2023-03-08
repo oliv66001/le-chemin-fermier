@@ -19,4 +19,11 @@ class DessertController extends AbstractController
         $categories = $entityManager->getRepository(Categorie::class)->findAll();
         return $this->render('dessert/index.html.twig', compact('categories','desserts'));
     }
+
+    #[Route('/{slug}', name: 'app_dessert_show')]
+    public function show(Categorie $categorie, DessertRepository $dessertRepository): Response
+    {
+        $desserts = $dessertRepository->findBy(['categorie' => $categorie]);
+        return $this->render('dessert/show.html.twig', compact('desserts'));
+    }
 }

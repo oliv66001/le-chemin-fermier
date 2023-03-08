@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/categorie', name: 'app_categorie_')]
 class CategorieController extends AbstractController
 {
-    #[Route('/', name: 'app_categorie')]
+    #[Route('/{slug} ', name: 'app_categorie')]
     public function index(EntityManagerInterface $entityManager,
     EntreeRepository $entreeRepository,
     PlatRepository $platRepository,

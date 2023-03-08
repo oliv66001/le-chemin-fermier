@@ -19,4 +19,11 @@ class DrinkController extends AbstractController
         $categories = $entityManager->getRepository(Categorie::class)->findAll();
         return $this->render('drink/index.html.twig', compact('categories','drinks'));
     }
+
+    #[Route('/{slug}', name: 'app_drink_show')]
+    public function show(Categorie $categorie, DrinkRepository $drinkRepository): Response
+    {
+        $drinks = $drinkRepository->findBy(['categorie' => $categorie]);
+        return $this->render('drink/show.html.twig', compact('drinks'));
+    }
 }

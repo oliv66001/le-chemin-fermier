@@ -61,7 +61,7 @@ class CategorieFixtures extends Fixture
                 ->setName($faker->sentence(3))
                 ->setDescription($faker->paragraph())
                 ->setPrice($faker->randomFloat(2, 4, 10))
-                ->setSlug($this->slugger->slug(Autowire::class))
+                ->setSlug($this->slugger->slug('Entrees'))
                 ->setCategorie($categorie);
             
             $manager->persist($entree);
@@ -77,7 +77,7 @@ class CategorieFixtures extends Fixture
                 ->setName($faker->sentence(3))
                 ->setDescription($faker->paragraph())
                 ->setPrice($faker->randomFloat(2, 4, 10))
-                ->setSlug($this->slugger->slug(Autowire::class))
+                ->setSlug($this->slugger->slug("Plats"))
                 ->setCategorie($categorie);
             
             $manager->persist($plat);
@@ -93,7 +93,7 @@ class CategorieFixtures extends Fixture
                 ->setName($faker->sentence(3))
                 ->setDescription($faker->paragraph())
                 ->setPrice($faker->randomFloat(2, 4, 10))
-                ->setSlug($this->slugger->slug(Autowire::class))
+                ->setSlug($this->slugger->slug("Desserts"))
                 ->setCategorie($categorie);
             
             $manager->persist($dessert);
@@ -107,7 +107,7 @@ class CategorieFixtures extends Fixture
                 ->setName($faker->sentence(3))
                 ->setDescription($faker->paragraph())
                 ->setPrice($faker->randomFloat(2, 4, 10))
-                ->setSlug($this->slugger->slug(Autowire::class))
+                ->setSlug($this->slugger->slug("Boissons"))
                 ->setCategorie($categorie);
             
             $manager->persist($drink);

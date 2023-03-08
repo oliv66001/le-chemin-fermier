@@ -1,5 +1,6 @@
 a.nav-link{
     color: var(--text-color);
+    font-family: 'Roboto Flex', sans-serif;
 }
 
 a.nav-link:hover{
@@ -12,4 +13,8 @@ a.navbar{
 
 nav{
     display: inline-block;
+}
+
+title{
+    font-family: 'Roboto Flex', sans-serif;
 }

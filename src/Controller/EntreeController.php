@@ -19,4 +19,11 @@ class EntreeController extends AbstractController
         $categories = $entityManager->getRepository(Categorie::class)->findAll();
         return $this->render('entree/index.html.twig', compact('categories','entrees'));
     }
+
+    #[Route('/{slug}', name: 'app_entree_show')]
+    public function show(Categorie $categorie, EntreeRepository $entreeRepository): Response
+    {
+        $entrees = $entreeRepository->findBy(['categorie' => $categorie]);
+        return $this->render('entree/show.html.twig', compact('entrees'));
+    }
 }
