@@ -6,6 +6,7 @@ namespace App\DataFixtures;
 use App\Entity\Categorie;
 use App\Entity\Dessert;
 use App\Entity\Drink;
+use App\Entity\Wine;
 use App\Entity\Entree;
 use App\Entity\Plat;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -29,6 +30,7 @@ class CategorieFixtures extends Fixture
             2 => "Plats",
             3 => "Desserts",
             4 => "Boissons",
+            5 => "Vins"
         ];
 
         foreach ($categorieIds as $id => $name) {
@@ -42,25 +44,27 @@ class CategorieFixtures extends Fixture
             
             // Maintenant que l'entité Categorie est persistée et sauvegardée en base de données,
             // nous pouvons l'utiliser pour créer des desserts qui y seront associés.
-            if ($id === 3) { // on ne crée des desserts que pour la catégorie "Desserts"
+            if ($id === 3) { 
                 $this->createDesserts($manager, $categorie, $faker);
-            } elseif ($id === 4) { // on ne crée des desserts que pour la catégorie "Desserts"
+            } elseif ($id === 4) { 
                 $this->createDrinks($manager, $categorie, $faker);
-            } elseif ($id === 1) { // on ne crée des desserts que pour la catégorie "Desserts"
+            } elseif ($id === 1) { 
                 $this->createEntrees($manager, $categorie, $faker);
-            } elseif ($id === 2) { // on ne crée des desserts que pour la catégorie "Desserts"
+            } elseif ($id === 2) { 
                 $this->createPlats($manager, $categorie, $faker);
+            } elseif ($id === 5) { 
+                $this->createWines($manager, $categorie, $faker);
             }
         }
     }
-
+    
     private function createEntrees(ObjectManager $manager, Categorie $categorie, Faker\Generator $faker)
     {
         for ($i = 0; $i < 3; $i++) {
             $entree = (new Entree())
                 ->setName($faker->sentence(3))
                 ->setDescription($faker->paragraph())
-                ->setPrice($faker->randomFloat(2, 4, 10))
+                ->setPrice($faker->randomFloat(12, 24, 35))
                 ->setSlug($this->slugger->slug('Entrees'))
                 ->setCategorie($categorie);
             
@@ -76,7 +80,7 @@ class CategorieFixtures extends Fixture
             $plat = (new Plat())
                 ->setName($faker->sentence(3))
                 ->setDescription($faker->paragraph())
-                ->setPrice($faker->randomFloat(2, 4, 10))
+                ->setPrice($faker->randomFloat(12, 24, 35))
                 ->setSlug($this->slugger->slug("Plats"))
                 ->setCategorie($categorie);
             
@@ -92,7 +96,7 @@ class CategorieFixtures extends Fixture
             $dessert = (new Dessert())
                 ->setName($faker->sentence(3))
                 ->setDescription($faker->paragraph())
-                ->setPrice($faker->randomFloat(2, 4, 10))
+                ->setPrice($faker->randomFloat(12, 14, 20))
                 ->setSlug($this->slugger->slug("Desserts"))
                 ->setCategorie($categorie);
             
@@ -111,6 +115,21 @@ class CategorieFixtures extends Fixture
                 ->setCategorie($categorie);
             
             $manager->persist($drink);
+        }
+
+        $manager->flush();
+    }
+    private function createWines(ObjectManager $manager, Categorie $categorie, Faker\Generator $faker)
+    {
+        for ($i = 0; $i < 10; $i++) {
+            $wine = (new Wine())
+                ->setName($faker->sentence(3))
+                ->setDescription($faker->paragraph())
+                ->setPrice($faker->randomFloat(12, 24, 50))
+                ->setSlug($this->slugger->slug("Vins"))
+                ->setCategorie($categorie);
+            
+            $manager->persist($wine);
         }
 
         $manager->flush();

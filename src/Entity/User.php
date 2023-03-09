@@ -52,7 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Reservation $reservation = null;
 
     #[ORM\OneToOne(mappedBy: 'reservationTable', cascade: ['persist', 'remove'])]
-    private ?Calendar $calendar = null;
+    private ?Calendar $calendar ;
 
     public function getId(): ?int
     {

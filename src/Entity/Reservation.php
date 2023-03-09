@@ -14,14 +14,17 @@ class Reservation
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $start = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $dateStart = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $timeStart = null;
 
     #[ORM\Column]
     private ?int $nbOfPeople = null;
 
     #[ORM\OneToOne(inversedBy: 'reservation', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $name = null;
 
     public function getId(): ?int
@@ -29,17 +32,7 @@ class Reservation
         return $this->id;
     }
 
-    public function getStart(): ?\DateTimeInterface
-    {
-        return $this->start;
-    }
-
-    public function setStart(\DateTimeInterface $start): self
-    {
-        $this->start = $start;
-
-        return $this;
-    }
+  
 
     public function getNbOfPeople(): ?int
     {
@@ -61,6 +54,54 @@ class Reservation
     public function setName(User $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of dateStart
+     *
+     * @return ?\DateTimeInterface
+     */
+    public function getDateStart(): ?\DateTimeInterface
+    {
+        return $this->dateStart;
+    }
+
+    /**
+     * Set the value of dateStart
+     *
+     * @param ?\DateTimeInterface $dateStart
+     *
+     * @return self
+     */
+    public function setDateStart(?\DateTimeInterface $dateStart): self
+    {
+        $this->dateStart = $dateStart;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of timeStart
+     *
+     * @return ?\DateTimeInterface
+     */
+    public function getTimeStart(): ?\DateTimeInterface
+    {
+        return $this->timeStart;
+    }
+
+    /**
+     * Set the value of timeStart
+     *
+     * @param ?\DateTimeInterface $timeStart
+     *
+     * @return self
+     */
+    public function setTimeStart(?\DateTimeInterface $timeStart): self
+    {
+        $this->timeStart = $timeStart;
 
         return $this;
     }

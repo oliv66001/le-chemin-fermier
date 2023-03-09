@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-
+	
 	<div id="calendar"></div>
 {% endblock %}
 
@@ -50,7 +50,10 @@ buttonText: {
 today: 'Aujourd\'hui',
 month: 'Mois',
 week: 'Semaine'
-}
+},
+
+events: {{ data | raw }},
+{
 });
 calendar.render();
 });

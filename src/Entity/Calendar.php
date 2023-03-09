@@ -2,53 +2,63 @@
 
 namespace App\Entity;
 
-use App\Repository\CalendarRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\MyTrait\SlugTrait;
+use App\Repository\CalendarRepository;
+use Symfony\Component\Validator\Constraints as ASSERT;
 
 #[ORM\Entity(repositoryClass: CalendarRepository::class)]
 class Calendar
 {
+
+    use SlugTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $start = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $dateStart = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[ASSERT\NotBlank(message: 'Veuillez renseigner une heure de début')]
+    #[ASSERT\Regex(pattern: '/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/', message: 'Veuillez renseigner une heure valide')]
+    private ?\DateTimeInterface $timeStart = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $reservationTable = null;
 
     #[ORM\Column]
     private ?int $nbOfPeople = null;
-
-    #[ORM\OneToOne(inversedBy: 'calendar', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $reservationTable = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getStart(): ?\DateTimeInterface
+    public function getDateStart(): ?\DateTimeInterface
     {
-        return $this->start;
+        return $this->dateStart;
     }
 
-    public function setStart(\DateTimeInterface $start): self
+    public function setDateStart(\DateTimeInterface $dateStart): self
     {
-        $this->start = $start;
+        $this->dateStart = $dateStart;
 
         return $this;
     }
 
-    public function getNbOfPeople(): ?int
+    public function getTimeStart(): ?\DateTimeInterface
     {
-        return $this->nbOfPeople;
+        return $this->timeStart;
     }
 
-    public function setNbOfPeople(int $nbOfPeople): self
+    public function setTimeStart(\DateTimeInterface $timeStart): self
     {
-        $this->nbOfPeople = $nbOfPeople;
+        $this->timeStart = $timeStart;
 
         return $this;
     }
@@ -65,47 +75,15 @@ class Calendar
         return $this;
     }
 
-    public function __toString(): string
+    public function getNbOfPeople(): ?int
     {
-        return $this->start->format('d/m/Y, H' . ' - ' . $this->nbOfPeople . ' personnes');
+        return $this->nbOfPeople;
     }
 
-    public function __construct()
+    public function setNbOfPeople(int $nbOfPeople): self
     {
-        $this->start = new \DateTime();
-    }
+        $this->nbOfPeople = $nbOfPeople;
 
-    public function __clone()
-
-    {
-        $this->id = null;
-        $this->start = new \DateTime();
-    }
-
-    public function __wakeup()
-
-    {
-        $this->start = new \DateTime();
-    }
-
-    public function __sleep()
-
-    {
-        return ['id', 'start', 'nbOfPeople', 'reservationTable'];
-    }
-
-    public function __invoke()
-
-    {
-        return $this->start->format('d/m/Y H:i');
-    }
-
-    public function __debugInfo()
-
-    {
-        return ['id' => $this->id, 
-        'start' => $this->start->format('d/m/Y H:i'), 
-        'nbOfPeople' => $this->nbOfPeople, 
-        'reservationTable' => $this->reservationTable];
+        return $this;
     }
 }

@@ -1,0 +1,41 @@
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<ul>
+					{% for categorie in categories %}
+						{% if categorie.slug == "Vins" %}
+							<img src={{ categorie.imageUrl }} alt="{{ categorie.name }}"/>
+						{% endif %}
+					{% endfor %}
+					<h1 class="text-center mt-10">Nos vins :
+					</h1>
+					{% for vin in vins %}
+
+						<section class="container">
+							<div class="row justify-content-center">
+								<div class="col-md-6">
+									<ol>
+										<h5>Nom :</br>
+									</h5>
+									<h3 class="text-center mt-10">
+										{{ vin.name }}</h3>
+								</ol>
+								<ol>
+									<h5>Description :</br>
+								</h5>
+								<h5>{{ vin.description }}</h5>
+							</ol>
+							<ol>
+								<h5>Prix :<h3 class="text-center">
+								{{ vin.price }}€</h3>
+							</h5>
+							
+						</ol>
+					</div>
+				</div>
+			</section>
+
+		{% endfor %}
+	</ul>
+</div></div><div>{% endblock %}

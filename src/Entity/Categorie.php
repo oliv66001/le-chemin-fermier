@@ -39,12 +39,16 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Drink::class)]
     private Collection $drink;
 
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Wine::class)]
+    private Collection $wine;
+
     public function __construct()
     {
         $this->entree = new ArrayCollection();
         $this->plat = new ArrayCollection();
         $this->dessert = new ArrayCollection();
         $this->drink = new ArrayCollection();
+        $this->wine = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -190,6 +194,36 @@ class Categorie
             // set the owning side to null (unless already changed)
             if ($drink->getCategorie() === $this) {
                 $drink->setCategorie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Wine>
+     */
+    public function getWine(): Collection
+    {
+        return $this->wine;
+    }
+
+    public function addWine(Wine $wine): self
+    {
+        if (!$this->wine->contains($wine)) {
+            $this->wine->add($wine);
+            $wine->setCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWine(Wine $wine): self
+    {
+        if ($this->wine->removeElement($wine)) {
+            // set the owning side to null (unless already changed)
+            if ($wine->getCategorie() === $this) {
+                $wine->setCategorie(null);
             }
         }
 

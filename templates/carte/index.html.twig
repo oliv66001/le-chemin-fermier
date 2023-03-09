@@ -37,18 +37,19 @@
 
 
 				</p>
-				<p class="boisson">
+				<p class="boisson col-4">
 
 					{% include "drink/index.html.twig" %}
+				</p>
+        	<p class="vin">
+
+					{% include "wine/index.html.twig" %}
 				</p>
 				<div></div>
 			</section>
 
 		</div>
 	</div>
-</article>{% endblock %}{% block javascripts %}
+</article>
+{% endblock %}
 
-
-<script src="{{ asset('assets/js/lib/turn.min.js') }}" defer></script>
-<script src="{{ asset('assets/js/lib/turn.html4.min.js') }}" defer></script>
-<script src="{{ asset('assets/js/lib/turn.js') }}" defer></script>{% endblock %}
