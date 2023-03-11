@@ -2,21 +2,18 @@
 
 namespace App\Form;
 
-use DateTime;
-use App\Entity\User;
+
+
 use App\Entity\Calendar;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+
 
 
 class CalendarType extends AbstractType
@@ -45,9 +42,6 @@ class CalendarType extends AbstractType
 
         $current_user = $this->security->getUser();
         $current_user_lastname = $current_user ? $current_user->getLastname() : null;
-
-        
-
 
         $builder
             ->add('dateStart', DateType::class, [
@@ -80,6 +74,7 @@ class CalendarType extends AbstractType
                 'data' => $current_user_lastname,
                 'disabled' => true,
                 'attr' => ['class' => 'btn form-group'],
+                
             ]);
         }
             

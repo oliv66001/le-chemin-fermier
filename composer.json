@@ -10,6 +10,7 @@
         "doctrine/annotations": "^2.0",
         "doctrine/doctrine-bundle": "^2.8",
         "doctrine/doctrine-migrations-bundle": "^3.2",
+        "doctrine/lexer": "^2.1",
         "doctrine/orm": "^2.14",
         "fakerphp/faker": "^1.21",
         "phpdocumentor/reflection-docblock": "^5.3",

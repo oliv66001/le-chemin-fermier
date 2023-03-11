@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Calendar;
 use App\Form\CalendarType;
-use DateTime;
+use \Symfony\Bundle\SecurityBundle\Security;
 use App\Repository\CalendarRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,29 +18,46 @@ class CalendarController extends AbstractController
     public function index(CalendarRepository $calendarRepository): Response
     {
         return $this->render('calendar/index.html.twig', [
-            'calendars' => $calendarRepository->findAll(),
+            'calendars' => $calendarRepository->findBy([
+                'reservationTable' => $this->getUser(),
+            ]),
         ]);
     }
 
     #[Route('/new', name: 'app_calendar_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CalendarRepository $calendarRepository): Response
+    public function new(Request $request, CalendarRepository $calendarRepository, Security $security): Response
     {
+        $user = $security->getUser();
+        $userId = $user->getId(); // récupérer l'id de l'utilisateur connecté
+    
         
-
         $calendar = new Calendar();
-        $dateString = "09-03-2022";
-        $date = DateTime::createFromFormat("d-m-Y H:i", $dateString);
-        
+        $calendar->setReservationTable($user);
+        $calendar->setReservationTableId($userId); // assigner l'id de l'utilisateur connecté à l'objet $calendar
+        $calendar->setReservationTableId($this->getUser()->getId());
+
         $form = $this->createForm(CalendarType::class, $calendar);
-        
         $form->handleRequest($request);
+    
+        $existingReservation = $calendarRepository->findBy([
+            'reservationTable' => $this->getUser(),
+
+        ]);
+
+        
+        if($existingReservation){
+            $this->addFlash('danger', 'Vous avez déjà une réservation en cours');
+            return $this->redirectToRoute('app_calendar_index');
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $calendarRepository->save($calendar, true);
-
+            $this->addFlash('succcess', 'Votre table à bien été réserver');
             return $this->redirectToRoute('app_calendar_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $reservations = $calendarRepository->findAllByUserQueryBuilder($user)->getQuery()->getResult();
+    
         return $this->render('calendar/new.html.twig', [
             'calendar' => $calendar,
             'form' => $form,
@@ -70,7 +87,7 @@ class CalendarController extends AbstractController
 
         return $this->render('calendar/edit.html.twig', [
             'calendar' => $calendar,
-            'form' => $form,
+            'calendarForm' => $form->createView(),
         ]);
     }
 

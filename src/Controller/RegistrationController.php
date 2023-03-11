@@ -41,7 +41,7 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
+dd($user);
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
@@ -59,7 +59,7 @@ class RegistrationController extends AbstractController
             $token = $jwt->generate($header, $payload, 
             $this->getParameter('app.jwtsecret'));
 
-            
+          
 
             $mail->send(
                 'no-reply@monsite.net',
@@ -90,7 +90,7 @@ class RegistrationController extends AbstractController
     EntityManagerInterface $em) : Response
     {
        //Vérification du token
-
+           
        if($jwt->isValid($token) &&
         !$jwt->isExpired($token) &&
          $jwt->check($token, $this->getParameter('app.jwtsecret'))){
@@ -103,7 +103,7 @@ class RegistrationController extends AbstractController
             //Vérification d'un utilisateur actif avec compte non activé
             if ($user && !$user->getIsVerified()){
                $user->setIsVerified(true);
-               $em->flush();
+               $em->flush($user);
                $this->addFlash('success', 'Votre compte a bien été activé');
            return $this->redirectToRoute('app_profile_index');
             

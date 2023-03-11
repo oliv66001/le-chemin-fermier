@@ -8,14 +8,15 @@
 <div class="col-md-6">
 
     <h1>Calendar index</h1>
-
+      {% if app.user %}
     <table class="table">
     
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Start</th>
-                <th>NbOfPeople</th>
+                <th>Réservation N°</th>
+                <th>Date réservation</th>
+                <th>Heure réservation</th>
+                <th>Nombre de personne</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,22 +24,24 @@
         {% for calendar in calendars %}
             <tr>
                 <td>{{ calendar.id }}</td>
-                <td>{{ calendar.start ? calendar.start|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ calendar.dateStart ? calendar.dateStart|date('d-m-Y') : '' }}</td>
+                 <td>{{ calendar.timeStart }}</td>
                 <td>{{ calendar.nbOfPeople }}</td>
                 <td>
-                    <a href="{{ path('app_calendar_show', {'id': calendar.id}) }}">show</a>
-                    <a href="{{ path('app_calendar_edit', {'id': calendar.id}) }}">edit</a>
+                    <a class="btn btn3 form-group" href="{{ path('app_calendar_show', {'id': calendar.id}) }}">Détail</a>
+                    <a class="btn btn2 form-group" href="{{ path('app_calendar_edit', {'id': calendar.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="5">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 <button class="btn btn">
     <a class="btn" href="{{ path('app_calendar_new') }}">Réserver une table</a></button>
+{% endif %}
 </div>
 </div>
 </section>
