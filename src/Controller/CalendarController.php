@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/calendar')]
+#[Route('/calendrier')]
 class CalendarController extends AbstractController
 {
     #[Route('/', name: 'app_calendar_index', methods: ['GET'])]

@@ -5,8 +5,8 @@
 {{ form_start(calendarForm) }}
    {{ form_row(calendarForm.dateStart) }}
     {{ form_row(calendarForm.timeStart) }}
+    {{ form_row(calendarForm.timeEnd)}}
     {{ form_row(calendarForm.nbOfPeople) }}
-    {{ form_row(calendarForm.reservationTable) }}
     <button class="btn">{{ button_label|default('Enregitrer') }}</button>
 {{ form_end(calendarForm) }}
 </div>

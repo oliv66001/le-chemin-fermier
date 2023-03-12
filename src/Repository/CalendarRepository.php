@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\User;
+use App\Entity\Users;
 use App\Entity\Calendar;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -40,7 +40,7 @@ class CalendarRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    public function findAllByUserQueryBuilder(User $user): QueryBuilder
+    public function findAllByUserQueryBuilder(Users $user): QueryBuilder
     {
         return $this->createQueryBuilder('c')
             ->where('c.reservationTable = :user')

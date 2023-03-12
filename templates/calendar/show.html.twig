@@ -20,9 +20,17 @@
                 <th>Date de la réservation</th>
                 <td>{{ calendar.dateStart ? calendar.dateStart|date('d-m-Y') : '' }}</td>
             </tr>
+        {#     <tr>
+                <th>Date de la réservation</th>
+                <td>{{ calendar.dateEnd ? calendar.dateEnd|date('d-m-Y') : '' }}</td>
+            </tr>#}
              <tr>
                 <th>Heure de la réservation</th>
                 <td>{{ calendar.timeStart }}</td>
+            </tr>
+            <tr>
+                <th>Heure de la réservation</th>
+                <td>{{ calendar.timeEnd }}</td>
             </tr>
             <tr>
                 <th>Nombre de personne</th>

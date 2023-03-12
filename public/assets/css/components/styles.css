@@ -23,7 +23,7 @@ button.navbar-toggler span{
 section {
     background-color: var(--templates-color);
     color: var(--text-color);
-    font-family: MaPolice, sans-serif;
+    font-family: Roboto Condensed , sans-serif;
 }
 
 

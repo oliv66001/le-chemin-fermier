@@ -1,83 +1,74 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Calendrier des réservation
-{% endblock %}
+{% block title %}Calendrier des réservation{% endblock %}
 
-{% block body %}
-	
-	<div id="calendar"></div>
+{% block body %}	
+	<div id="calendar" ></div>
 {% endblock %}
-
 
 {% block javascripts %}
 	{{ parent() }}
 	<script type='importmap'>
 		{
-				"imports": {
-					"@fullcalendar/core": "https://cdn.skypack.dev/@fullcalendar/core@6.1.4",
-					"@fullcalendar/daygrid": "https://cdn.skypack.dev/@fullcalendar/daygrid@6.1.4",
-					"@fullcalendar/timegrid": "https://cdn.skypack.dev/@fullcalendar/timegrid@6.1.4",
-					"@fullcalendar/core/locales/fr": "https://cdn.skypack.dev/@fullcalendar/core/locales/fr",
-					"@fullcalendar/interaction": "https://cdn.skypack.dev/@fullcalendar/interaction"
-				}
-				}
+			"imports": {
+				"@fullcalendar/core": "https://cdn.skypack.dev/@fullcalendar/core@6.1.4",
+				"@fullcalendar/daygrid": "https://cdn.skypack.dev/@fullcalendar/daygrid@6.1.4",
+				"@fullcalendar/timegrid": "https://cdn.skypack.dev/@fullcalendar/timegrid@6.1.4",
+				"@fullcalendar/core/locales/fr": "https://cdn.skypack.dev/@fullcalendar/core/locales/fr",
+				"@fullcalendar/interaction": "https://cdn.skypack.dev/@fullcalendar/interaction"
+			}
+		}
 	</script>
 	<script type='module'>
-		import {Calendar} from '@fullcalendar/core'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import frLocale from '@fullcalendar/core/locales/fr'
-import interactionPlugin from '@fullcalendar/interaction';
+		import { Calendar } from '@fullcalendar/core';
+		import dayGridPlugin from '@fullcalendar/daygrid';
+		import timeGridPlugin from '@fullcalendar/timegrid';
+		import frLocale from '@fullcalendar/core/locales/fr';
+		import interactionPlugin from '@fullcalendar/interaction';
 
+		document.addEventListener('DOMContentLoaded', function () {
+			const calendarEl = document.getElementById('calendar');
+			const calendar = new Calendar(calendarEl, {
+				plugins: [ timeGridPlugin, dayGridPlugin, interactionPlugin ],
+				initialView: 'timeGridWeek',
+				locales: [ frLocale ],
+				locale: 'fr',
+				timeZone: 'Europe/Paris',
+				headerToolbar: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'dayGridMonth,timeGridWeek'
+				},
+				buttonText: {
+					today: 'Aujourd\'hui',
+					month: 'Mois',
+					week: 'Semaine'
+				},
+               events: {{ data|raw }},
+				editable: true,
+				eventResizableFromStart: true,
+            })
+				 calendar.on('eventChange', (e) => {
+					// Faire une requête AJAX pour mettre à jour le rendez-vous
+					let url = `/api/${e.event.id}/edit`;
+					let data = {
+						"dateStart": e.event.start,
+						"dateEnd": e.event.end,
+						"timeStart": e.event.start,
+						"timeEnd": e.event.end,
+						"reservtionTableId": e.event.extendedProps.reservationTableId,
+						"nbOfPeople": e.event.extendedProps.nbOfPeople,
+					};
+                   
+					let xhr = new XMLHttpRequest
 
-document.addEventListener('DOMContentLoaded', function () {
-const calendarEl = document.getElementById('calendar')
-const calendar = new Calendar(calendarEl, {
-plugins: [
-timeGridPlugin, dayGridPlugin, interactionPlugin
-],
-initialView: 'timeGridWeek',
-locales: [frLocale],
-locale: 'frlocale',
-timeZone: 'Europe/Paris',
-headerToolbar: {
-left: 'prev,next today',
-center: 'title',
-right: 'dayGridMonth,timeGridWeek'
-
-},
-buttonText: {
-today: 'Aujourd\'hui',
-month: 'Mois',
-week: 'Semaine'
-},
-       
-   events: {{ data|raw }},
-            editable: true,
-            eventResizableFromStart: true
-        })
-		
-
-        calendar.on('eventDrop', (e) => {
-            let url = `/api/${e.event.id}/edit`
-            let donnees = {
-                "dateStart": e.event.start,
-                "timeStart": e.event.start,
-                "reservtionTableId": e.event.extendedProps.reservtionTableId,
-                "nbOfPeople" : e.event.extendedProps.nbOfPeople,
-                
-            }
-            
-            let xhr = new XMLHttpRequest
-
-            xhr.open("PUT", url)
-            xhr.send(JSON.stringify(donnees))
-        })
-      calendar.render()
-});
-
-
-</script>
-
-
+					xhr.open("PUT", url);
+					xhr.send(JSON.stringify(data));
+                    
+				})
+			
+           
+			calendar.render();
+		});
+	</script>
 {% endblock %}

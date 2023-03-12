@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 
 
@@ -27,6 +28,9 @@ class CalendarType extends AbstractType
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $class = "btn form-group";
+
+
         
         $hours = [
             '12:00' => '12:00',
@@ -48,16 +52,32 @@ class CalendarType extends AbstractType
                 'widget' => 'single_text',
                 'label' => 'Date de la réservation : ',
                 'attr' => ['class' => 'js-datepicker form-group'],
+                
+                
             ])
+
+
+         //   ->add('dateEnd', DateType::class, [
+         //       'widget' => 'single_text',
+         //       'label' => 'Date de fin de la réservation : ',
+         //       'attr' => ['class' => 'js-datepicker form-group'],
+         //   ])
 
             ->add('timeStart', ChoiceType::class, [
                 'choices' => $hours,
                 'label' => 'Heure de la réservation : ',
                 'attr' => [
-                    'class' => 'btn form-group',
+                    'class' => $class,
                 ],
                
                     ])
+            ->add('timeEnd', ChoiceType::class, [
+                'choices' => $hours,
+                'label' => 'Heure de fin de la réservation : ',
+                'attr' => [
+                    'class' => $class,
+                ],
+            ])
               
             ->add('nbOfPeople', IntegerType::class, [
                 'label' => 'Nombre de personnes',

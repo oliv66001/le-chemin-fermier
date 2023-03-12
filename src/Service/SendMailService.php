@@ -30,7 +30,7 @@ class SendMailService
         ->subject($subject)
         ->htmlTemplate("emails/$template.html.twig")
         ->context($context);
-
+   
     $this->mailer->send($email);
 }
 

@@ -3,13 +3,12 @@
 namespace App\Controller;
 
 
-use App\Entity\User;
+use App\Entity\Users;
 use App\Form\RegistrationFormType;
-use App\Repository\UserRepository;
+use App\Repository\UsersRepository;
 use App\Security\UserAuthenticator;
 use App\Service\JWTService;
 use App\Service\SendMailService;
-use Doctrine\Common\Lexer\Token;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * Summary of RegistrationController
+ */
 class RegistrationController extends AbstractController
 {
     #[Route('/inscription', name: 'app_register')]
@@ -29,7 +31,7 @@ class RegistrationController extends AbstractController
     EntityManagerInterface $entityManager, 
     SendMailService $mail, JWTService $jwt): Response
     {
-        $user = new User();
+        $user = new Users();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -41,7 +43,7 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-dd($user);
+
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
@@ -59,7 +61,7 @@ dd($user);
             $token = $jwt->generate($header, $payload, 
             $this->getParameter('app.jwtsecret'));
 
-          
+    
 
             $mail->send(
                 'no-reply@monsite.net',
@@ -84,9 +86,15 @@ dd($user);
     }
 
     #[Route('/verif/{token}', name: 'app_verify_user')]
-    public function verifyUser($token, 
-    JWTService $jwt, 
-    UserRepository $userRepository, 
+    /**
+     * Summary of verifyUser
+     * @param mixed $token
+     * @param JWTService $jwt
+     * @param UsersRepository $userRepository
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function verifyUser($token, JWTService $jwt, UsersRepository $userRepository, 
     EntityManagerInterface $em) : Response
     {
        //Vérification du token
@@ -122,9 +130,9 @@ dd($user);
         #[Route('/renvoiverif', name: 'app_resend_verif')]
     public function resendVerif(
     Request $request, 
-    UserRepository $userRepository, 
+    UsersRepository $userRepository, 
     SendMailService $mail, 
-    JWTService $jwt, Token $token): Response
+    JWTService $jwt): Response
     {
         //Récupération de l'utilisateur
         $user = $this->getUser();
@@ -161,7 +169,6 @@ dd($user);
                         compact ('user', 'token') 
                     
                 );
-
                 $this->addFlash('success', 'Un nouveau lien d\'activation vous a été envoyé par mail');
                 return $this->redirectToRoute('app_profile_index');
 }

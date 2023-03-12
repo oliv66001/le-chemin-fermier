@@ -18,9 +18,18 @@ class Calendar
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateStart = null;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $dateEnd;
+
     #[ORM\Column]
     #[ASSERT\NotBlank(message: 'Veuillez renseigner une heure')]
     private ?string $timeStart = null;
+
+    #[ORM\Column]
+    #[ASSERT\NotBlank(message: 'Veuillez renseigner une heure')]
+    #[ASSERT\GreaterThan(propertyPath: 'timeStart', 
+    message: 'L\'heure de fin doit être supérieure à l\'heure de début')]
+    private ?string $timeEnd = null;
 
     #[ORM\Column]
     private ?int $reservationTableId = null;
@@ -28,12 +37,17 @@ class Calendar
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $reservationTable = null;
+    private ?Users $reservationTable = null;
 
     #[ORM\Column]
     private ?int $nbOfPeople = null;
 
  
+    public function __construct()
+    {
+        $this->dateStart = new \DateTime();
+        $this->dateEnd = clone $this->dateStart;
+    }
 
     public function getId(): ?int
     {
@@ -46,11 +60,13 @@ class Calendar
     }
 
     public function setDateStart(\DateTimeInterface $dateStart): self
-    {
-        $this->dateStart = $dateStart;
+{
+    $this->dateStart = $dateStart;
+    $this->dateEnd = $dateStart; // Set dateEnd to same value as dateStart
 
-        return $this;
-    }
+    return $this;
+}
+
 
     public function getTimeStart(): ?string
     {
@@ -60,6 +76,57 @@ class Calendar
     public function setTimeStart(string $timeStart): self
     {
         $this->timeStart = $timeStart;
+
+        return $this;
+    }
+
+     /**
+     * Get the value of dateEnd
+     *
+     * @return ?\DateTimeInterface
+     */
+    public function getDateEnd(): ?\DateTimeInterface
+    {
+        return $this->dateEnd;
+    }
+
+    /**
+     * Set the value of dateEnd
+     *
+     * @param ?\DateTimeInterface $dateEnd
+     *
+     * @return self
+     */
+    public function setDateEnd(?\DateTimeInterface $dateEnd): self
+{
+    if ($dateEnd < $this->dateStart) {
+        throw new \InvalidArgumentException('La date de fin doit être supérieure ou égale à la date de début.');
+    }
+    $this->dateEnd = $dateEnd;
+
+    return $this;
+}
+
+     /**
+     * Get the value of timeEnd
+     *
+     * @return ?string
+     */
+    public function getTimeEnd(): ?string
+    {
+        return $this->timeEnd;
+    }
+
+    /**
+     * Set the value of timeEnd
+     *
+     * @param ?string $timeEnd
+     *
+     * @return self
+     */
+    public function setTimeEnd(?string $timeEnd): self
+    {
+        $this->timeEnd = $timeEnd;
 
         return $this;
     }
@@ -75,12 +142,12 @@ class Calendar
 
         return $this;
     }
-    public function getReservationTable(): ?User
+    public function getReservationTable(): ?Users
     {
         return $this->reservationTable;
     }
 
-    public function setReservationTable(User $reservationTable): self
+    public function setReservationTable(Users $reservationTable): self
     {
         $this->reservationTable = $reservationTable;
 
@@ -98,6 +165,4 @@ class Calendar
 
         return $this;
     }
-
- 
 }
